@@ -1,0 +1,43 @@
+<h1>Update {{route}}</h1>
+
+<h3>ID: {{item.id}}</h3>
+<form action="/{{route}}/update/{{item.id}}" method="POST">
+  <div>
+    <label for="name">Naam:</label><br>
+    <input 
+      type="text" 
+      id="name" 
+      name="name" 
+      value="{{item.name}}" 
+      placeholder="{{item.name}}" 
+    />
+  </div>
+
+  {{#if isPets}}
+    <div>
+      <label for="type">Soort dier (type):</label><br>
+      <input 
+        type="text" 
+        id="type" 
+        name="type" 
+        value="{{item.type}}" 
+        placeholder="{{item.type}}" 
+      />
+    </div>
+
+    <div>
+    <label>Eigenaar(s):</label><br>
+    {{#each persons}}
+      <label style="display: block;">
+        <input type="checkbox" name="ownerIds" value="{{this.id}}">
+        {{this.name}}
+      </label>
+    {{/each}}
+  </div>
+  {{/if}}
+
+  <div>
+    <br>
+    <button type="submit">💾 Opslaan</button>
+  </div>
+</form>

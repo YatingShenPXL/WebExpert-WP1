@@ -1,0 +1,44 @@
+<h1>
+  Lijst van {{route}}
+  <a href="/{{route}}/add">
+    <button type="button">➕</button>
+  </a>
+</h1>
+
+{{#each items}}
+  <table>
+    <tr>
+      <th>{{this.name}}</th>
+    </tr>
+
+    {{#if this.type}}
+      <tr>
+        <td>Type: {{this.type}}</td>
+      </tr>
+    {{/if}}
+
+    {{#if this.owners}}
+      <tr>
+        <td>Owners: {{this.owners}}</td>
+      </tr>
+    {{/if}}
+
+    <tr>
+      <td>
+        <a href="/{{@root.route}}/update/{{this.id}}">
+          <button type="button">✏️</button>
+        </a>
+
+        <form
+          action="/{{@root.route}}/delete/{{this.id}}"
+          method="POST"
+          style="display:inline;"
+        >
+          <button type="submit">❌</button>
+        </form>
+      </td>
+    </tr>
+  </table>
+{{else}}
+  <p>Geen items gevonden.</p>
+{{/each}}

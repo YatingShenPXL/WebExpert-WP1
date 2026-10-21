@@ -1,0 +1,34 @@
+routes:
+  - persons
+  - pets
+relationships:
+  pets:
+    - relatedRoute: persons
+      foreignKey: ownerIds
+      embed: owners
+persons:
+  - id: a0000000-0000-4000-8000-000000000001
+    name: Jan
+  - id: a0000000-0000-4000-8000-000000000002
+    name: Sofie
+  - id: a0000000-0000-4000-8000-000000000003
+    name: Tim
+  - id: a0000000-0000-4000-8000-000000000004
+    name: Seppe
+pets:
+  - id: b0000000-0000-4000-8000-000000000001
+    type: dog
+    name: Jimmy
+    ownerIds:
+      - a0000000-0000-4000-8000-000000000002
+  - id: b0000000-0000-4000-8000-000000000002
+    type: cat
+    name: Duvel
+    ownerIds:
+      - a0000000-0000-4000-8000-000000000001
+      - a0000000-0000-4000-8000-000000000002
+  - id: b0000000-0000-4000-8000-000000000003
+    type: dog
+    name: Fiel
+    ownerIds:
+      - a0000000-0000-4000-8000-000000000004

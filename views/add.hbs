@@ -1,0 +1,30 @@
+<h1>Nieuwe {{route}} toevoegen</h1>
+
+<form action="/{{route}}" method="POST">
+    <div>
+      <label for="name">Naam:</label><br>
+      <input type="text" id="name" name="name" required>
+    </div>
+
+ {{#if isPets}}
+  <div>
+    <label for="type">Soort dier (type):</label><br>
+    <input type="text" id="type" name="type" placeholder="bv. dog, cat" required>
+  </div>
+
+  <div>
+    <label>Eigenaar(s):</label><br>
+    {{#each persons}}
+      <label style="display: block;">
+        <input type="checkbox" name="ownerIds" value="{{this.id}}">
+        {{this.name}}
+      </label>
+    {{/each}}
+  </div>
+{{/if}}
+
+    <div>
+      <button type="submit">➕ Toevoegen</button>
+    </div>
+  </form>
+
