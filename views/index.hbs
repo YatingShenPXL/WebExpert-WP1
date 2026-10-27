@@ -1,7 +1,7 @@
 <h1>JSON Server</h1>
 <ul>
     {{#each routes}}
-      <li><a href="/{{this}}">{{this}}</a></li>
+      <li><a href="/{{this}}{{#if (equal this "pets")}}?embed=owners{{/if}}">{{this}}</a></li>
     {{/each}}
 </ul>
 

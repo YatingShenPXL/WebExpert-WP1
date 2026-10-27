@@ -1,4 +1,5 @@
 const express = require("express");
+const hbs = require("hbs");
 const yaml = require("js-yaml");
 const fs = require("fs");
 const path = require("path");
@@ -28,27 +29,32 @@ const service = createService(config);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true })); //HTML <form> request
 app.set('view engine','hbs');
+hbs.registerHelper("equal", (a, b) => a === b);
+
+function getRedirectUrl(req) {
+  let url = `/${req.params.route}`;
+  if (req.params.route == "pets"){
+    url += `?embed=owners`;
+  }
+  return url;
+}
 
 app.get("/", (req, res) => {
-  res.render("index",{
-    routes: config.routes
-  });
+  res.render("index", { routes: config.routes });
 });
 
 app.get("/:route", (req, res) => {
   const route = req.params.route;
-  const items = service.getAll(route, req.query.embed);
-
+  const embed = route === "pets" ? req.query.embed : undefined;
   res.render("list", {
-    items,
+    items: service.getAll(route, embed),
     route
-  })
+  });
 });
 
 app.get("/:route/add", (req, res) => {
   const route = req.params.route;
   const isPets = route === "pets";
-
   res.render("add", {
     route,
     isPets,
@@ -56,44 +62,37 @@ app.get("/:route/add", (req, res) => {
   });
 });
 
-app.get("/:route/:id", (req, res) => {
-  const item = service.getById(
-    req.params.route,
-    req.params.id,
-    req.query.embed
-  );
+app.get("/:route/update/:id", (req, res) => {
+  const { route, id } = req.params;
+  const isPets = route === "pets";
+  const item = service.getAll(route).find(i => String(i.id) === id);
 
-  res.json(item);
+  res.render("update", {
+    route,
+    item,
+    isPets,
+    persons: isPets ? service.getAll("persons") : []
+  });
 });
+
 
 
 app.post("/:route", (req, res) => {
-  const record = service.add(
-    req.params.route,
-    req.body
-  );
+  service.add(req.params.route, req.body);
 
-  res.status(201).json(record);
+  res.redirect(getRedirectUrl(req));
 });
 
-
-app.put("/:route/:id", (req, res) => {
-  const record = service.update(
-    req.params.route,
-    req.params.id,
-    req.body
-  );
-
-  res.json(record);
+app.post("/:route/update/:id", (req, res) => {
+  service.update(req.params.route, req.params.id, req.body);
+  
+  res.redirect(getRedirectUrl(req));
 });
 
-app.delete("/:route/:id", (req, res) => {
-  service.remove(
-    req.params.route,
-    req.params.id
-  );
+app.post("/:route/delete/:id", (req, res) => {
+  service.remove(req.params.route, req.params.id);
 
-  res.status(204).send();
+  res.redirect(getRedirectUrl(req));
 });
 
 // Foutafhandeling moet na de routes staan.
@@ -112,11 +111,7 @@ app.use((error, req, res, next) => {
 });
 
 function saveConfig() {
-  fs.writeFileSync(
-    configPath,
-    yaml.dump(config),
-    "utf8"
-  );
+  fs.writeFileSync(configPath, yaml.dump(config), "utf8");
 }
 
 const server = app

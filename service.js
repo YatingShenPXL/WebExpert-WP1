@@ -11,9 +11,7 @@ function createService(config) {
   function findItem(route, id) {
     const items = config[route] || [];
 
-    const item = items.find(
-      item => item.id === id
-    );
+    const item = items.find(item => item.id === id);
 
     if (!item) {
       fail(404, `ID ${id} doesn't exist in ${route}`);

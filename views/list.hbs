@@ -19,7 +19,7 @@
 
     {{#if this.owners}}
       <tr>
-        <td>Owners: {{this.owners}}</td>
+        <td>Owners: {{#each this.owners}}{{this.name}}{{#unless @last}}, {{/unless}}{{/each}}</td>
       </tr>
     {{/if}}
 
