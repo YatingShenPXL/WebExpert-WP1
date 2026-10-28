@@ -6,22 +6,29 @@ relationships:
     - relatedRoute: persons
       foreignKey: ownerIds
 persons:
-  - id: a0000000-0000-4000-8000-000000000001
-    name: Jan
-  - id: a0000000-0000-4000-8000-000000000002
-    name: Sofie
-  - name: yating
-    id: dd36217d-621d-4ffb-a440-310cc46f4b93
+  - name: YaTing
+    id: 3433f4f2-87d9-4956-adff-ff1e0dde1247
+  - name: Seppe
+    id: f229e278-5fe2-49d5-bcf5-ab42bd98411b
+  - name: Jan
+    id: 923b029d-a9f3-4b65-b686-029ac2092bb9
+  - name: ssssfsafa
+    id: 2394c8c8-7f21-4b04-9e0b-3fe57425a640
 pets:
-  - id: b0000000-0000-4000-8000-000000000001
+  - name: Fiel
     type: dog
-    name: Jimmy
-    ownerIds:
-      - a0000000-0000-4000-8000-000000000002
-  - name: Duvel
+    ownerIds: f229e278-5fe2-49d5-bcf5-ab42bd98411b
+    id: efb99b4c-502b-4a1c-ac27-71f5f5898e4b
+  - name: Lucy
     type: cat
     ownerIds:
-      - a0000000-0000-4000-8000-000000000001
-      - a0000000-0000-4000-8000-000000000002
-      - dd36217d-621d-4ffb-a440-310cc46f4b93
-    id: b0000000-0000-4000-8000-000000000002
+      - 3433f4f2-87d9-4956-adff-ff1e0dde1247
+      - f229e278-5fe2-49d5-bcf5-ab42bd98411b
+    id: 9bd0e294-7c54-4192-a2f2-9a88c3dcc0af
+  - name: abracadabra
+    type: dog
+    ownerIds:
+      - 3433f4f2-87d9-4956-adff-ff1e0dde1247
+      - f229e278-5fe2-49d5-bcf5-ab42bd98411b
+      - 923b029d-a9f3-4b65-b686-029ac2092bb9
+    id: 1c01d843-4718-4b14-aa3a-0cf3ba7ed9fd

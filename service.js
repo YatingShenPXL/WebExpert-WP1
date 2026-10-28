@@ -20,7 +20,6 @@ function createService(config) {
     return item;
   }
 
-
  function embedRelations(item, embed) {
   const result = { ...item };
 
@@ -63,26 +62,19 @@ function createService(config) {
   }
 
   function update(route, id, body) {
-    const items = config[route] || [];
     const currentItem = findItem(route, id);
 
-    const index = items.indexOf(currentItem);
-
-    // PUT vervangt het record, maar behoudt het bestaande ID.
-    const record = {
+    Object.assign(currentItem, {
       ...body,
       id: currentItem.id,
-    };
+    });
 
-    items[index] = record;
-
-    return record;
+    return currentItem;
   }
 
   function remove(route, id) {
     const items = config[route] || [];
     const item = findItem(route, id);
-
     items.splice(items.indexOf(item), 1);
   }
 

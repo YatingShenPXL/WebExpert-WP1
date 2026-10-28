@@ -62,6 +62,12 @@ app.get("/:route/add", (req, res) => {
   });
 });
 
+app.get("/:route/:id", (req, res) => {
+  const { route, id } = req.params;
+  const item = service.getById(route, id);
+  res.json(item);
+});
+
 app.get("/:route/update/:id", (req, res) => {
   const { route, id } = req.params;
   const isPets = route === "pets";
